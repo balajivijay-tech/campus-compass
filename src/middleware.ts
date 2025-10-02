@@ -1,3 +1,3 @@
 export { default } from "next-auth/middleware"
 
-export const config = { matcher: ["/dashboard", "/intelligence", "/curriculum"] }
+export const config = { matcher: ["/", "/dashboard", "/intelligence", "/curriculum"] }
