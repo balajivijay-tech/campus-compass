@@ -54,3 +54,52 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Region {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  jobs      Job[]
+  companies Company[]
+}
+
+model Industry {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  companies Company[]
+}
+
+model Role {
+  id              String          @id @default(cuid())
+  title           String
+  experienceLevel ExperienceLevel
+  jobs            Job[]
+}
+
+model Company {
+  id         String   @id @default(cuid())
+  name       String
+  industry   Industry @relation(fields: [industryId], references: [id])
+  industryId String
+  region     Region   @relation(fields: [regionId], references: [id])
+  regionId   String
+  jobs       Job[]
+}
+
+model Job {
+  id              String          @id @default(cuid())
+  title           String
+  description     String
+  company         Company         @relation(fields: [companyId], references: [id])
+  companyId       String
+  role            Role            @relation(fields: [roleId], references: [id])
+  roleId          String
+  region          Region          @relation(fields: [regionId], references: [id])
+  regionId        String
+  experienceLevel ExperienceLevel
+  postedAt        DateTime        @default(now())
+}
+
+enum ExperienceLevel {
+  FRESHER
+  EXPERIENCED
+}
